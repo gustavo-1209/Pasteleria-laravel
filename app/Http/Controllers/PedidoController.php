@@ -63,16 +63,12 @@ class PedidoController extends Controller
 
     public function destroy(Pedido $pedido)
     {
-        if ($pedido->estado === 'Entregada') {
-            return redirect()
-                ->route('pedidos.index')
-                ->with('success', 'El pedido entregado se mantiene como historial');
-        }
-
-        $pedido->delete();
+        $pedido->update([
+            'estado' => 'Cancelado'
+        ]);
 
         return redirect()
             ->route('pedidos.index')
-            ->with('success', 'Pedido eliminado correctamente');
+            ->with('success', 'Pedido cancelado correctamente');
     }
 }
